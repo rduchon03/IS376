@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 from sqlalchemy import Column, Integer, String, create_engine
@@ -8,6 +9,15 @@ import openai
 
 # ---------- FastAPI Setup ----------
 app = FastAPI()
+
+# ---------- CORS Setup ----------
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ---------- SQLite / SQLAlchemy Setup ----------
 SQLALCHEMY_DATABASE_URL = "sqlite:///./books.db"
